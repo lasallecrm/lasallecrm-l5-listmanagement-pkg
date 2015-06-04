@@ -63,11 +63,11 @@ class ListmanagementServiceProvider extends ServiceProvider {
 
         //$this->setupTranslations();
 
-        $this->setupViews();
+        //$this->setupViews();
 
         //$this->setupAssets();
 
-        //$this->setupMigrations();
+        $this->setupMigrations();
         //$this->setupSeeds();
     }
 
