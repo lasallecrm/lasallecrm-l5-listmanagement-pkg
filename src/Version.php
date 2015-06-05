@@ -1,4 +1,4 @@
-<?php namespace Lasallecrm\Todo;
+<?php namespace Lasallecrm\Listmanagement;
 
 /**
  *

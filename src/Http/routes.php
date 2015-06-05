@@ -35,5 +35,5 @@ Route::group(array('prefix' => 'admin'), function()
 {
     // Regular tables
     Route::resource('listmgmtlists', 'AdminListMgmtListsController');
-    Route::resource('listmgmtlistemails', 'AdminListMgmtListEmailsController');
+    Route::resource('listmgmtlistemails', 'AdminListEmailsMgmtListsController');
 });

@@ -121,7 +121,7 @@ class List_Email extends BaseModel
      *
      * @var string
      */
-    public $namespace_formprocessor = 'Lasallecrm\Todo\Jobs\List_Emails';
+    public $namespace_formprocessor = 'Lasallecrm\Listmanagement\Jobs\List_Emails';
 
     /*
      * Class name of the CREATE Form Processor command
@@ -153,8 +153,6 @@ class List_Email extends BaseModel
      * @var array
      */
     public $sanitationRulesForCreate = [
-        'title'       => 'trim|strip_tags',
-        'description' => 'trim',
         'comments'    => 'trim',
     ];
 
@@ -164,8 +162,6 @@ class List_Email extends BaseModel
      * @var array
      */
     public $sanitationRulesForUpdate = [
-        'title'       => 'trim|strip_tags',
-        'description' => 'trim',
         'comments'    => 'trim',
     ];
 
@@ -180,7 +176,6 @@ class List_Email extends BaseModel
     public $validationRulesForCreate = [
         'list_id'     => 'integer',
         'email_id'    => 'integer',
-        'title'       => 'required|min:7',
     ];
 
     /**
@@ -191,7 +186,6 @@ class List_Email extends BaseModel
     public $validationRulesForUpdate = [
         'list_id'     => 'integer',
         'email_id'    => 'integer',
-        'title'       => 'min:7',
     ];
 
 
