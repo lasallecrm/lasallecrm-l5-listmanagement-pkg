@@ -1,5 +1,5 @@
 <?php
-namespace Lasallecrm\Listmanagement\Jobs\List_Emails;
+namespace Lasallecrm\Listmanagement\Listeners\List_Emails;
 
 /**
  *

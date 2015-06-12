@@ -19,7 +19,7 @@ LaSalle Software email list management.
 
 In config/app.php:
 ```
-'Lasallecrm\Listmanagement\ListmanagementServiceProvider',
+Lasallecrm\Listmanagement\ListmanagementServiceProvider::class,
 ```
 
 

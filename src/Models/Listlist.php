@@ -129,7 +129,7 @@ class Listlist extends BaseModel
      *
      * @var string
      */
-    public $namespace_formprocessor = 'Lasallecrm\Listmanagement\Jobs\Lists';
+    public $namespace_formprocessor = 'Lasallecrm\Listmanagement\Listeners\Lists';
 
     /*
      * Class name of the CREATE Form Processor command

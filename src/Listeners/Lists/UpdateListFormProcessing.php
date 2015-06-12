@@ -1,5 +1,5 @@
 <?php
-namespace Lasallecrm\Listmanagement\Jobs\Lists;
+namespace Lasallecrm\Listmanagement\Listeners\Lists;
 
 /**
  *
@@ -32,7 +32,6 @@ namespace Lasallecrm\Listmanagement\Jobs\Lists;
  *
  */
 
-
 ///////////////////////////////////////////////////////////////////
 ///            THIS IS A COMMAND HANDLER                        ///
 ///////////////////////////////////////////////////////////////////
@@ -46,21 +45,19 @@ namespace Lasallecrm\Listmanagement\Jobs\Lists;
 ///////////////////////////////////////////////////////////////////
 
 
-
 // LaSalle Software
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 use Lasallecms\Lasallecmsapi\FormProcessing\BaseFormProcessing;
 
-
 /*
- * Process a new record.
+ * Process an existing record.
  *
  * FYI: BaseFormProcessing implements the FormProcessing interface.
  */
-class CreateListFormProcessing extends BaseFormProcessing
+class UpdateListFormProcessing extends BaseFormProcessing
 {
     /*
-     * Instance of the BASE repository
+     * Instance of repository
      *
      * @var Lasallecms\Lasallecmsapi\Repositories\BaseRepository
      */
@@ -78,7 +75,7 @@ class CreateListFormProcessing extends BaseFormProcessing
      *
      * @var string
      */
-    protected $type = "create";
+    protected $type = "update";
 
     ///////////////////////////////////////////////////////////////////
     /// SPECIFY THE FULL NAMESPACE AND CLASS NAME OF THE MODEL      ///
@@ -89,7 +86,6 @@ class CreateListFormProcessing extends BaseFormProcessing
      * @var string
      */
     protected $namespaceClassnameModel = "Lasallecrm\Listmanagement\Models\Listlist";
-
 
 
 
@@ -110,18 +106,16 @@ class CreateListFormProcessing extends BaseFormProcessing
         $this->repository->injectModelIntoRepository($this->namespaceClassnameModel);
     }
 
-
-
     /*
      * The form processing steps.
      *
      * @param  object  $createCommand   The command bus object
      * @return array                    The custom response array
      */
-    public function quarterback($createCommand)
+    public function quarterback($updateCommand)
     {
         // Convert the command bus object into an array
-        $data = (array) $createCommand;
+        $data = (array) $updateCommand;
 
 
         // Sanitize
@@ -131,7 +125,10 @@ class CreateListFormProcessing extends BaseFormProcessing
         // Validate
         if ($this->validate($data, $this->type) != "passed")
         {
-            // Prepare the response array, and then return to the form with error messages
+            // Unlock the record
+            $this->unlock($data['id']);
+
+            // Prepare the response array, and then return to the edit form with error messages
             return $this->prepareResponseArray('validation_failed', 500, $data, $this->validate($data, $this->type));
         }
 
@@ -140,10 +137,13 @@ class CreateListFormProcessing extends BaseFormProcessing
         $data = $this->wash($data);
 
 
-        // INSERT record
+        // UPDATE record
         if (!$this->persist($data, $this->type))
         {
-            // Prepare the response array, and then return to the form with error messages
+            // Unlock the record
+            $this->unlock($data['id']);
+
+            // Prepare the response array, and then return to the edit form with error messages
             // Laravel's https://github.com/laravel/framework/blob/5.0/src/Illuminate/Database/Eloquent/Model.php
             //  does not prepare a MessageBag object, so we'll whip up an error message in the
             //  originating controller
@@ -151,8 +151,12 @@ class CreateListFormProcessing extends BaseFormProcessing
         }
 
 
-        // Prepare the response array, and then return to the controller
-        return $this->prepareResponseArray('create_successful', 200, $data);
+        // Unlock the record
+        $this->unlock($data['id']);
+
+
+        // Prepare the response array, and then return to the command
+        return $this->prepareResponseArray('update_successful', 200, $data);
 
 
         ///////////////////////////////////////////////////////////////////
