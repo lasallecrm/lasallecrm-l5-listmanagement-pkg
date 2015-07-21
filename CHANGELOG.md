@@ -1,7 +1,10 @@
 # CHANGE LOG
 
 
-## NEXT: VERSION 0.9 - 2015-04-17
+# *** THIS PACKAGE IS STILL IN EMBRYONIC STATE ***
+
+
+## NEXT: VERSION 0.1 - DATE UNKNOWN
 
 ### Add
 * basic list management administration
