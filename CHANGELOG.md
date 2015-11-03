@@ -1,17 +1,10 @@
 # CHANGE LOG
 
 
-# *** THIS PACKAGE IS STILL IN EMBRYONIC STATE ***
-
-
-## NEXT: VERSION 0.1 - DATE UNKNOWN
-
-### Add
-* basic list management administration
-* set up package skeleton
+## VERSION 1.0 - (10-03-2015)
 
 ### All GitHub issues for this version
-* [https://github.com/lasallecrm/lasallecrm-l5-listmanagement-pkg/issues?q=is%3Aissue+milestone%3A%22Version+0.9%22](https://github.com/lasallerm/lasallecrm-l5-listmanagement-pkg/issues?q=is%3Aissue+milestone%3A%22Version+0.9%22)
+* [https://github.com/lasallecrm/lasallecrm-l5-listmanagement-pkg/issues?q=milestone%3A%22Version+1.0%22+is%3Aclosed](https://github.com/lasallecrm/lasallecrm-l5-listmanagement-pkg/issues?q=milestone%3A%22Version+1.0%22+is%3Aclosed)
 
 
 
