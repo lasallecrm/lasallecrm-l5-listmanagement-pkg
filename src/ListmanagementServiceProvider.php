@@ -6,7 +6,7 @@
  *
  * Based on the Laravel 5 Framework.
  *
- * Copyright (C) 2015  The South LaSalle Trading Corporation
+ * Copyright (C) 2015 - 2016  The South LaSalle Trading Corporation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  *
  * @package    List Management package for the LaSalle Customer Relationship Management package
  * @link       http://LaSalleCRM.com
- * @copyright  (c) 2015, The South LaSalle Trading Corporation
+ * @copyright  (c) 2015 - 2016, The South LaSalle Trading Corporation
  * @license    http://www.gnu.org/licenses/gpl-3.0.html
  * @author     The South LaSalle Trading Corporation
  * @email      info@southlasalle.com
