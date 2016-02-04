@@ -11,6 +11,10 @@
 
 List Management package for the LaSalle Customer Relationship Management package
 
+# CAVEAT!
+
+This package is barely at the proof-of-concept stage. I may develop the concept; or, I may end up deleting this package. For the time being, I will leave this package as-is so it is available when the time (may) come to develop the "list management" concept. 
+
 
 ## Security
 
