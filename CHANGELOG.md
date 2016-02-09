@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## VERSION 1.01 - 2016-02-08
+
+### All GitHub issues for this version
+* [https://github.com/lasallecrm/lasallecrm-l5-listmanagement-pkg/issues?q=milestone%3A%22Version+1.01%22+is%3Aclosed](https://github.com/lasallecrm/lasallecrm-l5-listmanagement-pkg/issues?q=milestone%3A%22Version+1.01%22+is%3Aclosed)
 
 ## VERSION 1.0 - (10-03-2015)
 
