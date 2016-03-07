@@ -9,7 +9,7 @@ LaSalle Software email list management.
 ```
 {
     "require": {
-        "lasallecrm/listmanagement": "0.9.*",
+        "lasallecrm/listmanagement": "1.*",
     }
 }
 ```
