@@ -46,18 +46,17 @@ use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 use Lasallecrm\Listmanagement\Models\Listlist as Model;
 
 
-/*
+/**
  * Resource controller for administration of posts
  */
 class AdminListMgmtListsController extends AdminFormBaseController
 {
-    /*
+    /**
      * @param  Model, as specified above
      * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository
      * @return void
      */
-    public function __construct(Model $model, BaseRepository $repository)
-    {
+    public function __construct(Model $model, BaseRepository $repository) {
         // execute AdminController's construct method first in order to run the middleware
         parent::__construct();
 
