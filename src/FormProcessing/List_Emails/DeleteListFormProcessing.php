@@ -1,5 +1,6 @@
 <?php
-namespace Lasallecrm\Listmanagement\Listeners\List_Emails;
+
+namespace Lasallecrm\Listmanagement\FormProcessing\List_Emails;
 
 /**
  *
@@ -32,6 +33,7 @@ namespace Lasallecrm\Listmanagement\Listeners\List_Emails;
  *
  */
 
+
 ///////////////////////////////////////////////////////////////////
 ///            THIS IS A COMMAND HANDLER                        ///
 ///////////////////////////////////////////////////////////////////
@@ -50,11 +52,11 @@ use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 use Lasallecms\Lasallecmsapi\FormProcessing\BaseFormProcessing;
 
 /*
- * Process an existing record.
+ * Process a deletion.
  *
  * FYI: BaseFormProcessing implements the FormProcessing interface.
  */
-class UpdateList_EmailFormProcessing extends BaseFormProcessing
+class DeleteList_EmailFormProcessing extends BaseFormProcessing
 {
     /*
      * Instance of repository
@@ -75,7 +77,7 @@ class UpdateList_EmailFormProcessing extends BaseFormProcessing
      *
      * @var string
      */
-    protected $type = "update";
+    protected $type = "destroy";
 
     ///////////////////////////////////////////////////////////////////
     /// SPECIFY THE FULL NAMESPACE AND CLASS NAME OF THE MODEL      ///
@@ -88,7 +90,6 @@ class UpdateList_EmailFormProcessing extends BaseFormProcessing
     protected $namespaceClassnameModel = "Lasallecrm\Listmanagement\Models\List_Email";
 
 
-
     ///////////////////////////////////////////////////////////////////
     ///   USUALLY THERE IS NOTHING ELSE TO MODIFY FROM HERE ON IN   ///
     ///////////////////////////////////////////////////////////////////
@@ -97,70 +98,33 @@ class UpdateList_EmailFormProcessing extends BaseFormProcessing
     /*
      * Inject the model
      *
-     * @param Lasallecms\Lasallecmsapi\Repositories\BaseRepository
+     * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository
      */
-    public function __construct(BaseRepository $repository)
-    {
+    public function __construct(BaseRepository $repository) {
         $this->repository = $repository;
 
         $this->repository->injectModelIntoRepository($this->namespaceClassnameModel);
     }
 
+
     /*
-     * The form processing steps.
+     * The processing steps.
      *
-     * @param  object  $createCommand   The command bus object
-     * @return array                    The custom response array
+     * @param  The command bus object   $deletePostCommand
+     * @return The custom response array
      */
-    public function quarterback($updateCommand)
-    {
-        // Convert the command bus object into an array
-        $data = (array) $updateCommand;
-
-
-        // Sanitize
-        $data = $this->sanitize($data, $this->type);
-
-
-        // Validate
-        if ($this->validate($data, $this->type) != "passed")
+    public function quarterback($id) {
+        // DELETE record
+        if (!$this->persist($id, $this->type))
         {
-            // Unlock the record
-            $this->unlock($data['id']);
-
-            // Prepare the response array, and then return to the edit form with error messages
-            return $this->prepareResponseArray('validation_failed', 500, $data, $this->validate($data, $this->type));
-        }
-
-
-        // Even though we already sanitized the data, we further "wash" the data
-        $data = $this->wash($data);
-
-
-        // UPDATE record
-        if (!$this->persist($data, $this->type))
-        {
-            // Unlock the record
-            $this->unlock($data['id']);
-
             // Prepare the response array, and then return to the edit form with error messages
             // Laravel's https://github.com/laravel/framework/blob/5.0/src/Illuminate/Database/Eloquent/Model.php
             //  does not prepare a MessageBag object, so we'll whip up an error message in the
             //  originating controller
-            return $this->prepareResponseArray('persist_failed', 500, $data);
+            return $this->prepareResponseArray('persist_failed', 500, $id);
         }
 
-
-        // Unlock the record
-        $this->unlock($data['id']);
-
-
         // Prepare the response array, and then return to the command
-        return $this->prepareResponseArray('update_successful', 200, $data);
-
-
-        ///////////////////////////////////////////////////////////////////
-        ///     NO EVENTS ARE SPECIFIED IN THE BASE FORM PROCESSING     ///
-        ///////////////////////////////////////////////////////////////////
+        return $this->prepareResponseArray('create_successful', 200, $id);
     }
 }

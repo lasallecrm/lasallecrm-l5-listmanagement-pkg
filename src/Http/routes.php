@@ -36,6 +36,8 @@ Route::group(array('prefix' => 'admin'), function()
     // Regular tables
     Route::resource('listmgmtlists', 'AdminListMgmtListsController');
     Route::post('listmgmtlists/confirmDeletion/{id}', 'AdminListMgmtListsController@confirmDeletion');
+    Route::post('listmgmtlists/confirmDeletionMultipleRows', 'AdminListMgmtListsController@confirmDeletionMultipleRows');
+    Route::post('listmgmtlists/destroyMultipleRecords', 'AdminListMgmtListsController@destroyMultipleRecords');
 
     Route::resource('listmgmtlistemails', 'AdminListEmailsMgmtListsController');
     Route::post('listmgmtlistemails/confirmDeletion/{id}', 'AdminListEmailsMgmtListsController@confirmDeletion');

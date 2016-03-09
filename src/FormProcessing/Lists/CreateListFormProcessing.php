@@ -1,5 +1,5 @@
 <?php
-namespace Lasallecrm\Listmanagement\Listeners\Lists;
+namespace Lasallecrm\Listmanagement\FormProcessing\Lists;
 
 /**
  *
@@ -103,8 +103,7 @@ class CreateListFormProcessing extends BaseFormProcessing
      *
      * @param Lasallecms\Lasallecmsapi\Repositories\BaseRepository
      */
-    public function __construct(BaseRepository $repository)
-    {
+    public function __construct(BaseRepository $repository) {
         $this->repository = $repository;
 
         $this->repository->injectModelIntoRepository($this->namespaceClassnameModel);
@@ -118,8 +117,7 @@ class CreateListFormProcessing extends BaseFormProcessing
      * @param  object  $createCommand   The command bus object
      * @return array                    The custom response array
      */
-    public function quarterback($createCommand)
-    {
+    public function quarterback($createCommand) {
         // Convert the command bus object into an array
         $data = (array) $createCommand;
 

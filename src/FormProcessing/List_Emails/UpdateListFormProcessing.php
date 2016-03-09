@@ -1,5 +1,5 @@
 <?php
-namespace Lasallecrm\Listmanagement\Listeners\Lists;
+namespace Lasallecrm\Listmanagement\FormProcessing\List_Emails;
 
 /**
  *
@@ -54,7 +54,7 @@ use Lasallecms\Lasallecmsapi\FormProcessing\BaseFormProcessing;
  *
  * FYI: BaseFormProcessing implements the FormProcessing interface.
  */
-class UpdateListFormProcessing extends BaseFormProcessing
+class UpdateList_EmailFormProcessing extends BaseFormProcessing
 {
     /*
      * Instance of repository
@@ -85,7 +85,7 @@ class UpdateListFormProcessing extends BaseFormProcessing
      *
      * @var string
      */
-    protected $namespaceClassnameModel = "Lasallecrm\Listmanagement\Models\Listlist";
+    protected $namespaceClassnameModel = "Lasallecrm\Listmanagement\Models\List_Email";
 
 
 
@@ -99,8 +99,7 @@ class UpdateListFormProcessing extends BaseFormProcessing
      *
      * @param Lasallecms\Lasallecmsapi\Repositories\BaseRepository
      */
-    public function __construct(BaseRepository $repository)
-    {
+    public function __construct(BaseRepository $repository) {
         $this->repository = $repository;
 
         $this->repository->injectModelIntoRepository($this->namespaceClassnameModel);
@@ -112,8 +111,7 @@ class UpdateListFormProcessing extends BaseFormProcessing
      * @param  object  $createCommand   The command bus object
      * @return array                    The custom response array
      */
-    public function quarterback($updateCommand)
-    {
+    public function quarterback($updateCommand) {
         // Convert the command bus object into an array
         $data = (array) $updateCommand;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lasallecrm\Listmanagement\Models;
 
 /**
@@ -129,7 +130,7 @@ class Listlist extends BaseModel
      *
      * @var string
      */
-    public $namespace_formprocessor = 'Lasallecrm\Listmanagement\Listeners\Lists';
+    public $namespace_formprocessor = 'Lasallecrm\Listmanagement\FormProcessing\Lists';
 
     /*
      * Class name of the CREATE Form Processor command
