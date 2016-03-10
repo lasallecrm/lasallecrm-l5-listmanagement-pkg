@@ -92,6 +92,11 @@ class SendEmailsFromList
         // build the individual emails
         $emailIDs = $this->helpers->getEnabledEmailsFromList($listID);
 
+        if (count($emailIDs) == 0) {
+            // for some reason, maybe mismatched list_id #'s, finding no emails
+            return false;
+        }
+
         // iterate through each email address, prepping and sending each email individually!
         foreach ($emailIDs as $emailID) {
 
@@ -106,11 +111,11 @@ class SendEmailsFromList
 
             // send the email one-at-a-time
             // note the queue-ing
-            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['data' => $data], function($message) use ($to_email, $to_name)
+            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['data' => $data], function($message) use ($to_email, $to_name, $subject)
             {
                 $message->from(Config::get('lasallecmscontact.from_email'), Config::get('lasallecmscontact.from_name'));
                 $message->to($to_email, $to_name);
-                $message->subject($to_email);
+                $message->subject($subject);
             });
 
         }
