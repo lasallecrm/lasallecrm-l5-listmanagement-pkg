@@ -1,4 +1,6 @@
-<?php namespace Lasallecrm\Listmanagement;
+<?php
+
+namespace Lasallecrm\Listmanagement;
 
 /**
  *
@@ -31,6 +33,7 @@
  *
  */
 
+// Laravel classes
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -63,7 +66,7 @@ class ListmanagementServiceProvider extends ServiceProvider {
 
         //$this->setupTranslations();
 
-        //$this->setupViews();
+        $this->setupViews();
 
         //$this->setupAssets();
 
@@ -138,8 +141,8 @@ class ListmanagementServiceProvider extends ServiceProvider {
      */
     private function registerListmanagement()
     {
-        $this->app->bind('listmanagement', function($app) {
-            return new Listmanagement($app);
+        $this->app->bind('lasallecrmlistmanagement', function($app) {
+            return new Lasallecrmlistmanagement($app);
         });
 
     }
@@ -166,7 +169,7 @@ class ListmanagementServiceProvider extends ServiceProvider {
      */
     public function setupViews()
     {
-        $this->loadViewsFrom(__DIR__.'/../views', 'todo');
+        $this->loadViewsFrom(__DIR__.'/../views', 'lasallecrmlistmanagement');
 
         $this->publishes([
             __DIR__.'/../views' => base_path('resources/views/vendor/lasallecrmlistmanagement'),

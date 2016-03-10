@@ -37,6 +37,8 @@ namespace Lasallecrm\Listmanagement\Http\Controllers;
 use Lasallecms\Formhandling\AdminFormhandling\AdminFormBaseController;
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 
+use Lasallecrm\Listmanagement\SendEmails\SendEmailsFromList;
+
 
 ///////////////////////////////////////////////////////////////////
 ///////     MODIFY THE MODEL NAMESPACE & CLASS "as Model"     /////
@@ -51,6 +53,9 @@ use Lasallecrm\Listmanagement\Models\Listlist as Model;
  */
 class AdminListMgmtListsController extends AdminFormBaseController
 {
+
+    protected $sendEmails;
+
     /**
      * @param  Model, as specified above
      * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository
@@ -68,5 +73,14 @@ class AdminListMgmtListsController extends AdminFormBaseController
 
         // Inject the relevant model into the repository
         $this->repository->injectModelIntoRepository($this->model->model_namespace."\\".$this->model->model_class);
+    }
+
+    public function test(SendEmailsFromList $sendEmails) {
+        $result = $sendEmails->sendEmails(1);
+
+        if (!$result) {
+            return "<hr>sendEmails FALSE";
+        }
+        return "<hr>sendEmails TRUE";
     }
 }
