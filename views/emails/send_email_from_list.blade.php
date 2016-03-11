@@ -1,8 +1,8 @@
 New article from SouthLaSalle.com...
 
-<h2>{!! $data['link'] !!}</h2>
+<h2>{!! $post['link'] !!}</h2>
 
-{!! $data['body'] !!}
+{!! $post['body'] !!}
 
 
 @include('lasallecrmlistmanagement::emails.footer_basic')

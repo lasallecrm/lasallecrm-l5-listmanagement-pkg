@@ -66,19 +66,18 @@ class SendEmailsFromList
      * Expected that this method called from another package, via an event job
      *
      * @param  int     $listID    Database table "lists" ID
-     * @param  array   $data      Email subject and body
+     * @param  array   $post      Post's title, body, etc
      * @return bool
      */
-    public function sendEmails($listID, $data=null) {
+    public function sendEmails($listID, $post) {
 
-        // **TEST DATA ONLY!  simulating data from other pkg...**
-        $data['title'] = 'Vestiges of Vertigo';
-
-        $data['link']  = '<a href="#">';
-        $data['link'] .= $data['title'];
-        $data['link'] .= '</a>';
-
-        $data['body']  = "I am thrilled we are expanding our Town Hall meeting place for patriots by taking TV broadcasting to a new level on multiple platforms where I will speak directly to my audience -- uncensored, without middlemen, and commercial free. I make no excuses for my patriotism, I am proud of it, and LevinTV will reflect it. It’s about time there is a place on television where people can go and have their principles, beliefs, and values reinforced rather than attacked.";
+        // for the blade files
+        $post['link']  = '<a href="';
+        $post['link'] .= $post['canonical_url'];
+        $post['link'] .= '">';
+        $post['link'] .= $post['title'];
+        $post['link'] .= '</a>';
+        $post['body']  = $post['content'];
 
 
         // if the list is not enabled, then return false
@@ -86,8 +85,10 @@ class SendEmailsFromList
             return false;
         }
 
+        $emailData = [];
+
         // subject
-        $subject = $this->helpers->getListNameFromListID($listID) . ' - ' . $data['title'];
+        $emailData['subject'] = $this->helpers->getListNameFromListID($listID) . ' - ' . $post['title'];
 
         // build the individual emails
         $emailIDs = $this->helpers->getEnabledEmailsFromList($listID);
@@ -100,24 +101,29 @@ class SendEmailsFromList
         // iterate through each email address, prepping and sending each email individually!
         foreach ($emailIDs as $emailID) {
 
+            // if emails must be type "primary" AND the email is *not* type primary, do not process
+            if (!$this->helpers->isEmailAddressPrimaryType($emailID->email_id)) {
+                continue;
+            }
+
             // get the actual email address from the "email_id" field in the "list_email" db table
-            $to_email = $this->helpers->getEmailAddressFromEmailID($emailID->email_id);
+            $emailData['to_email'] = $this->helpers->getEmailAddressFromEmailID($emailID->email_id);
 
             // get the person's first name and surname
-            $to_name = $this->helpers->getFirstnameSurnameFromEmailID($emailID->email_id);
+            $emailData['to_name'] = $this->helpers->getFirstnameSurnameFromEmailID($emailID->email_id);
 
-            $data['to_email'] = $to_email;
-            $data['to_name']  = $to_name;
+            $post['to_email'] = $emailData['to_email'] ;
+            $post['to_name']  = $emailData['to_name'];
+
 
             // send the email one-at-a-time
             // note the queue-ing
-            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['data' => $data], function($message) use ($to_email, $to_name, $subject)
+            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['post' => $post], function($message) use ($emailData)
             {
                 $message->from(Config::get('lasallecmscontact.from_email'), Config::get('lasallecmscontact.from_name'));
-                $message->to($to_email, $to_name);
-                $message->subject($subject);
+                $message->to($emailData['to_email'], $emailData['to_name']);
+                $message->subject($emailData['subject']);
             });
-
         }
 
         return true;

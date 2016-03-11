@@ -37,16 +37,18 @@ return [
 
     /*
 	|--------------------------------------------------------------------------
-	| Config Setting
+	| Do you want lists comprised of 'primary' emails only
 	|--------------------------------------------------------------------------
 	|
-	| Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-    | ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
-    | dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+	| Do you want your email lists comprised of "primary" email types only?
+	|
+	| That is, lookup_email_types #1
+	|
+	| true or false
 	|
 	*/
 
-    'config_key' => 'config_value',
+    'listmgmt_emails_in_list_primary_type_only' => true,
 
 ];
 

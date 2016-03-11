@@ -187,6 +187,4 @@ class ListmanagementServiceProvider extends ServiceProvider {
     {
         return array('lasallecrmlistmanagement');
     }
-
-
 }

@@ -35,6 +35,7 @@ namespace Lasallecrm\Listmanagement\Helpers;
 
 // Laravel facades
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class Helpers
@@ -84,6 +85,44 @@ class Helpers
             ->where('list_id',  $listID)
             ->where('enabled', true)
             ->get()
+        ;
+    }
+
+    /**
+     * Is the email type "primary" AND must we accept "primary" type only?
+     *
+     * Both conditions must be true to return true
+     *
+     * @param   int    $emailID       Emails db table's ID
+     * @return  bool
+     */
+    public function isEmailAddressPrimaryType($emailID) {
+
+        // Must we accept "primary" email type only?
+        if (!Config::get('lasallecrmlistmanagement.listmgmt_emails_in_list_primary_type_only')) {
+            return false;
+        }
+
+        // "primary" type is #1
+        if ($this->getEmailType($emailID) != 1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the email type
+     *
+     * @param   int    $emailID       Emails db table's ID
+     * @return  bool
+     */
+    public function getEmailType($emailID) {
+        return DB::table('emails')
+            ->select('email_type_id')
+            ->where('id',  $emailID)
+            ->first()
+            ->email_type_id
         ;
     }
 
