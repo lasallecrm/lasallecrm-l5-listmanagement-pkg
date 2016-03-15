@@ -1,4 +1,7 @@
-New article from SouthLaSalle.com...
+I just published this article on my SouthLaSalle.com website. -Bob
+<br />
+<hr />
+<br />
 
 <h2>{!! $post['link'] !!}</h2>
 
