@@ -71,15 +71,6 @@ class SendEmailsFromList
      */
     public function sendEmails($listID, $post) {
 
-        // for the blade files
-        $post['link']  = '<a href="';
-        $post['link'] .= $post['canonical_url'];
-        $post['link'] .= '">';
-        $post['link'] .= $post['title'];
-        $post['link'] .= '</a>';
-        $post['body']  = $post['content'];
-
-
         // if the list is not enabled, then return false
         if (!$this->helpers->isListEnabled($listID)) {
             return false;
@@ -98,6 +89,14 @@ class SendEmailsFromList
             return false;
         }
 
+        // for the blade files
+        $post['link']  = '<a href="';
+        $post['link'] .= $post['canonical_url'];
+        $post['link'] .= '">';
+        $post['link'] .= $post['title'];
+        $post['link'] .= '</a>';
+        $post['body']  = $post['content'];
+
         // iterate through each email address, prepping and sending each email individually!
         foreach ($emailIDs as $emailID) {
 
@@ -114,7 +113,6 @@ class SendEmailsFromList
 
             $post['to_email'] = $emailData['to_email'] ;
             $post['to_name']  = $emailData['to_name'];
-
 
             // send the email one-at-a-time
             // note the queue-ing
