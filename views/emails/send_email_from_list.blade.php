@@ -3,9 +3,9 @@ I just published this article on my SouthLaSalle.com website. -Bob
 <hr />
 <br />
 
-<h2>{!! $post['link'] !!}</h2>
+<h2>{!! $data['link'] !!}</h2>
 
-{!! $post['body'] !!}
+{!! $data['content'] !!}
 
 
 @include('lasallecrmlistmanagement::emails.footer_basic')

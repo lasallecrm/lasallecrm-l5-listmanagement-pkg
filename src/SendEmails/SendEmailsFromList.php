@@ -66,10 +66,10 @@ class SendEmailsFromList
      * Expected that this method called from another package, via an event job
      *
      * @param  int     $listID    Database table "lists" ID
-     * @param  array   $post      Post's title, body, etc
+     * @param  array   $data      Post's title, body, etc
      * @return bool
      */
-    public function sendEmails($listID, $post) {
+    public function sendEmails($listID, $data) {
 
         // if the list is not enabled, then return false
         if (!$this->helpers->isListEnabled($listID)) {
@@ -79,7 +79,7 @@ class SendEmailsFromList
         $emailData = [];
 
         // subject
-        $emailData['subject'] = $this->helpers->getListNameFromListID($listID) . ' - ' . $post['title'];
+        $emailData['subject'] = $this->helpers->getListNameFromListID($listID) . ' - ' . $data['title'];
 
         // build the individual emails
         $emailIDs = $this->helpers->getEnabledEmailsFromList($listID);
@@ -90,12 +90,11 @@ class SendEmailsFromList
         }
 
         // for the blade files
-        $post['link']  = '<a href="';
-        $post['link'] .= $post['canonical_url'];
-        $post['link'] .= '">';
-        $post['link'] .= $post['title'];
-        $post['link'] .= '</a>';
-        $post['body']  = $post['content'];
+        $data['link']  = '<a href="';
+        $data['link'] .= $data['canonical_url'];
+        $data['link'] .= '">';
+        $data['link'] .= $data['title'];
+        $data['link'] .= '</a>';
 
         // iterate through each email address, prepping and sending each email individually!
         foreach ($emailIDs as $emailID) {
@@ -111,12 +110,12 @@ class SendEmailsFromList
             // get the person's first name and surname
             $emailData['to_name'] = $this->helpers->getFirstnameSurnameFromEmailID($emailID->email_id);
 
-            $post['to_email'] = $emailData['to_email'] ;
-            $post['to_name']  = $emailData['to_name'];
+            $data['to_email'] = $emailData['to_email'] ;
+            $data['to_name']  = $emailData['to_name'];
 
             // send the email one-at-a-time
             // note the queue-ing
-            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['post' => $post], function($message) use ($emailData)
+            Mail::queue('lasallecrmlistmanagement::emails.send_email_from_list', ['data' => $data], function($message) use ($emailData)
             {
                 $message->from(Config::get('lasallecmscontact.from_email'), Config::get('lasallecmscontact.from_name'));
                 $message->to($emailData['to_email'], $emailData['to_name']);
