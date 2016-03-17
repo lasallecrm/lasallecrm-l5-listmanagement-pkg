@@ -1,5 +1,7 @@
 <?php
 
+namespace Lasallecrm\Listmanagement\Repositories;
+
 /**
  *
  * List Management package for the LaSalle Customer Relationship Management package.
@@ -31,21 +33,45 @@
  *
  */
 
-Route::group(array('prefix' => 'admin'), function()
+
+// LaSalle Software
+use Lasallecrm\Lasallecrmapi\Repositories\BaseRepository;
+use Lasallecrm\Listmanagement\Models\List_Email;
+
+// Laravel facades
+//use Illuminate\Support\Facades\DB;
+
+
+class List_EmailRepository extends BaseRepository
 {
-    // Regular tables
-    Route::resource('listmgmtlists', 'AdminListMgmtListsController');
-    Route::post('listmgmtlists/confirmDeletion/{id}', 'AdminListMgmtListsController@confirmDeletion');
-    Route::post('listmgmtlists/confirmDeletionMultipleRows', 'AdminListMgmtListsController@confirmDeletionMultipleRows');
-    Route::post('listmgmtlists/destroyMultipleRecords', 'AdminListMgmtListsController@destroyMultipleRecords');
+    /**
+     * Instance of model
+     *
+     * @var Lasallecrm\Listmanagement\Models\List_Email
+     */
+    protected $model;
 
-    Route::resource('listmgmtlistemails', 'AdminListEmailsMgmtListsController');
-    Route::post('listmgmtlistemails/confirmDeletion/{id}', 'AdminListEmailsMgmtListsController@confirmDeletion');
-    Route::post('listmgmtlistemails/confirmDeletionMultipleRows', 'AdminListEmailsMgmtListsController@confirmDeletionMultipleRows');
-    Route::post('listmgmtlistemails/destroyMultipleRecords', 'AdminListEmailsMgmtListsController@destroyMultipleRecords');
+    /**
+     * Inject the model
+     *
+     * @param  Lasallecrm\Lasallecrmapi\Models\List_Email
+     */
+    public function __construct(List_Email $model) {
+        $this->model = $model;
+    }
 
-    Route::get('bobby/bobby', 'AdminListMgmtListsController@bobby');
-});
+    /**
+     * UPDATE a list_email record so that "enabled" is false
+     *
+     * @param  int   $emailID
+     * @param  int   $listID
+     * @return void
+     */
+    public function enabledFalse($emailID, $listID) {
 
-// Front-end routes
-Route::get('list/unsubscribe/{token}', 'FrontendListUnsubscribeController@unsubscribe');
+        $this->model->where('list_id', $listID)
+            ->where('email_id', $emailID)
+            ->update(['enabled' => false])
+        ;
+    }
+}

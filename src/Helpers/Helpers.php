@@ -37,6 +37,10 @@ namespace Lasallecrm\Listmanagement\Helpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 
+
+// YES, I SHOULD GET THESE METHODS INTO THE REPOSITORIES.,,
+
+
 /**
  * Class Helpers
  * @package Lasallecrm\Listmanagement\Helpers

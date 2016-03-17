@@ -1,5 +1,7 @@
 <?php
 
+namespace Lasallecrm\Listmanagement\Repositories;
+
 /**
  *
  * List Management package for the LaSalle Customer Relationship Management package.
@@ -31,21 +33,42 @@
  *
  */
 
-Route::group(array('prefix' => 'admin'), function()
+
+// LaSalle Software
+use Lasallecrm\Lasallecrmapi\Repositories\BaseRepository;
+use Lasallecrm\Listmanagement\Models\Listlist;
+
+// Laravel facades
+//use Illuminate\Support\Facades\DB;
+
+
+class ListRepository extends BaseRepository
 {
-    // Regular tables
-    Route::resource('listmgmtlists', 'AdminListMgmtListsController');
-    Route::post('listmgmtlists/confirmDeletion/{id}', 'AdminListMgmtListsController@confirmDeletion');
-    Route::post('listmgmtlists/confirmDeletionMultipleRows', 'AdminListMgmtListsController@confirmDeletionMultipleRows');
-    Route::post('listmgmtlists/destroyMultipleRecords', 'AdminListMgmtListsController@destroyMultipleRecords');
+    /**
+     * Instance of model
+     *
+     * @var Lasallecrm\Listmanagement\Models\Listlist
+     */
+    protected $model;
 
-    Route::resource('listmgmtlistemails', 'AdminListEmailsMgmtListsController');
-    Route::post('listmgmtlistemails/confirmDeletion/{id}', 'AdminListEmailsMgmtListsController@confirmDeletion');
-    Route::post('listmgmtlistemails/confirmDeletionMultipleRows', 'AdminListEmailsMgmtListsController@confirmDeletionMultipleRows');
-    Route::post('listmgmtlistemails/destroyMultipleRecords', 'AdminListEmailsMgmtListsController@destroyMultipleRecords');
+    /**
+     * Inject the model
+     *
+     * @param  Lasallecrm\Lasallecrmapi\Models\Listlist
+     */
+    public function __construct(Listlist $model) {
+        $this->model = $model;
+    }
 
-    Route::get('bobby/bobby', 'AdminListMgmtListsController@bobby');
-});
+    /**
+     * Get the list title by ID
+     *
+     * @param  int  $listID
+     * @return text
+     */
+    public function getListnameByListId($listID) {
+        $list = $this->model->where('id', $listID)->first();
 
-// Front-end routes
-Route::get('list/unsubscribe/{token}', 'FrontendListUnsubscribeController@unsubscribe');
+        return $list->title;
+    }
+}

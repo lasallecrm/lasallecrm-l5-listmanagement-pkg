@@ -36,19 +36,39 @@
 return [
 
     /*
-	|--------------------------------------------------------------------------
-	| Do you want lists comprised of 'primary' emails only
-	|--------------------------------------------------------------------------
-	|
-	| Do you want your email lists comprised of "primary" email types only?
-	|
-	| That is, lookup_email_types #1
-	|
-	| true or false
-	|
-	*/
-
+    |--------------------------------------------------------------------------
+    | Do you want lists comprised of 'primary' emails only
+    |--------------------------------------------------------------------------
+    |
+    | Do you want your email lists comprised of "primary" email types only?
+    |
+    | That is, lookup_email_types #1
+    |
+    | true or false
+    |
+    */
     'listmgmt_emails_in_list_primary_type_only' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Unsubscribe token exists for the recent token only
+    |--------------------------------------------------------------------------
+    |
+    | Do you want the most recent unsubscribe token in the "list_unsubscribe_token" database table?
+    |
+    | Or, do you want all unsubscribe tokens retained in the db table?
+    |
+    | Each email sent from a LaSalleCRM email list has (or is supposed to have) a footer with an unsubscribe-to-this-list
+    | link. Each token is different. Each token is valid for the unsubscribe action as long as the corresponding
+    | database record exists for it.
+    |
+    | If you prefer, you can choose to have just the most recently created token as the valid unsubscribe token.
+    |
+    | true  = the most recently created token is the only valid token for unsubscribing
+    | false = all previouisly created tokens are valid for unsubscribing (by virtue of existing in the db table)
+    |
+    */
+    'listmgmt_unsubscribe_token_recent_only' => false,
 
 ];
 

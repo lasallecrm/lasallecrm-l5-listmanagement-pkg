@@ -111,6 +111,28 @@ class CreateListmanagementTables extends Migration
                 $table->foreign('locked_by')->references('id')->on('users');
             });
         }
+
+        // This table holds the unsubscribe token created by each email list send-out.
+        // This table has *NO* admin back-end administration.
+        // "unsubscribe" means that a record in "list_email" is not enabled, so it's easy to unsubscribe in the admin
+        //  via the "list_email" update form.
+        if (!Schema::hasTable('list_unsubscribe_token')) {
+            Schema::create('list_unsubscribe_token', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+
+                $table->increments('id')->unsigned();
+
+                $table->integer('list_id')->unsigned();
+                $table->foreign('list_id')->references('id')->on('lists');
+
+                $table->integer('email_id')->unsigned();
+                $table->foreign('email_id')->references('id')->on('emails');
+
+                $table->string('token')->unique()->index();
+
+                $table->timestamp('created_at');
+            });
+        }
     }
 
 
@@ -144,6 +166,13 @@ class CreateListmanagementTables extends Migration
             $table->dropForeign('list_email_locked_by_foreign');
         });
         Schema::dropIfExists('list_email');
+
+        Schema::table('list_unsubscribe_token', function($table){
+            $table->dropIndex('list_unsubscribe_token_token_unique');
+            $table->dropForeign('list_unsubscribe_token_list_id_foreign');
+            $table->dropForeign('list_unsubscribe_token_email_id_foreign');
+        });
+        Schema::dropIfExists('list_unsubscribe_token');
 
         // Enable foreign key constraints
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');

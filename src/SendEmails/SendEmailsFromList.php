@@ -35,6 +35,7 @@ namespace Lasallecrm\Listmanagement\SendEmails;
 
 // LaSalle Software
 use Lasallecrm\Listmanagement\Helpers\Helpers;
+use Lasallecrm\Listmanagement\Helpers\CreateUnsubscribeToken;
 
 // Laravel facades
 use Illuminate\Support\Facades\Config;
@@ -52,12 +53,19 @@ class SendEmailsFromList
     protected $helpers;
 
     /**
+     * @var protected Lasallecrm\Listmanagement\Helpers\CreateUnsubscribeToken;
+     */
+    protected $createUnsubscribeToken;
+
+    /**
      * SendEmailsFromList constructor.
      *
      * @param Helpers $helpers
+     * @param CreateUnsubscribeToken $createUnsubscribeToken
      */
-    public function __construct(Helpers $helpers) {
-        $this->helpers = $helpers;
+    public function __construct(Helpers $helpers, CreateUnsubscribeToken $createUnsubscribeToken) {
+        $this->helpers                = $helpers;
+        $this->createUnsubscribeToken = $createUnsubscribeToken;
     }
 
     /**
@@ -89,7 +97,7 @@ class SendEmailsFromList
             return false;
         }
 
-        // for the blade files
+        // link to the post
         $data['link']  = '<a href="';
         $data['link'] .= $data['canonical_url'];
         $data['link'] .= '">';
@@ -103,6 +111,23 @@ class SendEmailsFromList
             if (!$this->helpers->isEmailAddressPrimaryType($emailID->email_id)) {
                 continue;
             }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            ////                         Unsubscribe from List                                     ////
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            // Create a token
+            $unsubscribeToken = $this->createUnsubscribeToken->createUniqueToken();
+
+            // INSERT to the list_unsubscribe_token database table
+            $this->createUnsubscribeToken->createTokenRecord($listID, $emailID->email_id, $unsubscribeToken);
+
+            // Build the unsubscribe link
+            $data['unsubscribe_link'] = $this->createUnsubscribeToken->unsubscribeURL($unsubscribeToken);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            ////                     Send email to a list recipient                                ////
+            ///////////////////////////////////////////////////////////////////////////////////////////
 
             // get the actual email address from the "email_id" field in the "list_email" db table
             $emailData['to_email'] = $this->helpers->getEmailAddressFromEmailID($emailID->email_id);
