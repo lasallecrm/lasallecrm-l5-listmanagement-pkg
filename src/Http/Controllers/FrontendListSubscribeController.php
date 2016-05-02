@@ -39,16 +39,19 @@ use Lasallecrm\Lasallecrmapi\Repositories\EmailRepository;
 use Lasallecrm\Listmanagement\Repositories\ListRepository;
 use Lasallecrm\Listmanagement\Repositories\List_EmailRepository;
 
-
 // Laravel classes
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
+
+// Laravel facades
+use Illuminate\Support\Facades\Config;
 
 
 /**
  * Class FrontendListUnsubscribeController
  * @package Lasallecrm\Listmanagement\Http\Controllers
  */
-class FrontendListUnsubscribeController extends BaseController {
+class FrontendListSubscribeController extends BaseController {
 
     /**
      * @var Lasallecrm\Listmanagement\Models\List_Unsubscribe_Token
@@ -90,16 +93,58 @@ class FrontendListUnsubscribeController extends BaseController {
         $this->list_EmailRepository  = $list_EmailRepository;
     }
 
+
+
+    public function subscribeform($listID) {
+
+        if (!$this->listRepository->getListByID($listID)) {
+            return view('lasallecrmlistmanagement::subscribe-unsubscribe-list.list_invalid', [
+                'title'            => 'Invalid List',
+            ]);
+        }
+
+        return view('lasallecrmlistmanagement::subscribe-unsubscribe-list.subscribe_form', [
+            'title'            => 'List Sign-up',
+            'email_field_only' => Config::get('lasallecrmlistmanagement.listmgmt_subscribe_form_email_field_only'),
+            'list'             => $this->listRepository->getListnameByListId($listID) ,
+        ]);
+    }
+
     /**
-     * Unsubscribe from a LaSalleCRM email list
+     * Subscribe someone to a LaSalleCRM email list from the filled in subscribe form
      *
-     * @param $token
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function unsubscribe($token) {
+    public function postSubscribe(Request $request) {
+
+        // validate
+
+
+        // wash
+
+
+        // create LaSalleCRM records
+
+
+
+
+
+
+
+        return view('lasallecrmlistmanagement::subscribe-unsubscribe-list.subscribe_success', [
+            'title'    => 'Successful List Subscription',
+        ]);
+
+
+
+        // **************************************************************************************************************
+
+
 
         // Does the token exist in the list_unsubscribe_token database table?
         if (!$this->model->isTokenValid($token)) {
-            return view('lasallecrmlistmanagement::subscribe-unsubscribe-list.token_invalid', [
+            return view('lasallecrmlistmanagement::unsubscribe.token_invalid', [
                 'title'    => 'Invalid Unsubscribe Token',
             ]);
         }
@@ -119,7 +164,7 @@ class FrontendListUnsubscribeController extends BaseController {
         // un-enabled (ie, disable) the list_email database record for this email_id and list_id
         $this->list_EmailRepository->enabledFalse($emailID, $listID);
 
-        return view('lasallecrmlistmanagement::subscribe-unsubscribe-list.unsubscribe_success', [
+        return view('lasallecrmlistmanagement::unsubscribe.success', [
             'title'    => 'Unsubscribe Successful',
             'email'    => $email,
             'listName' => $listName

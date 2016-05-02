@@ -70,5 +70,22 @@ return [
     */
     'listmgmt_unsubscribe_token_recent_only' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Subscribe to list form has first name and surname fields
+    |--------------------------------------------------------------------------
+    |
+    | Do you want the most subscribe-to-list form to include first_name and surname fields?
+    |
+    | It is preferable to include these fields because it is better to create a "peoples" database table record, and
+    | then associate the "peoples" id with the email address.
+    |
+    | However, many list sign-up forms ask for just the email only.
+    |
+    | true or false
+    |
+    */
+    'listmgmt_subscribe_form_email_field_only' => false,
+
 ];
 

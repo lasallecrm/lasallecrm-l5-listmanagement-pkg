@@ -43,9 +43,9 @@ Route::group(array('prefix' => 'admin'), function()
     Route::post('listmgmtlistemails/confirmDeletion/{id}', 'AdminListEmailsMgmtListsController@confirmDeletion');
     Route::post('listmgmtlistemails/confirmDeletionMultipleRows', 'AdminListEmailsMgmtListsController@confirmDeletionMultipleRows');
     Route::post('listmgmtlistemails/destroyMultipleRecords', 'AdminListEmailsMgmtListsController@destroyMultipleRecords');
-
-    Route::get('bobby/bobby', 'AdminListMgmtListsController@bobby');
 });
 
 // Front-end routes
 Route::get('list/unsubscribe/{token}', 'FrontendListUnsubscribeController@unsubscribe');
+Route::get('list/subscribe/{listid}', 'FrontendListSubscribeController@subscribeform');
+Route::post('list/subscribe/', 'FrontendListSubscribeController@postSubscribe');

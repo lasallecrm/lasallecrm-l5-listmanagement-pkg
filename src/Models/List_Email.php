@@ -279,7 +279,7 @@ class List_Email extends BaseModel
             'name'                  => 'enabled',
             'type'                  => 'boolean',
             'info'                  => false,
-            'index_skip'            => true,
+            'index_skip'            => false,
             'index_align'           => 'center',
             'persist_wash'          => 'enabled',
         ],

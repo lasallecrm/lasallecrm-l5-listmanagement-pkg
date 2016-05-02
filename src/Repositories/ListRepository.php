@@ -61,6 +61,14 @@ class ListRepository extends BaseRepository
     }
 
     /**
+     * @param  int        $listID
+     * @return collection
+     */
+    public function getListByID($listID) {
+        return $this->model->where('id', $listID)->first();
+    }
+
+    /**
      * Get the list title by ID
      *
      * @param  int  $listID
