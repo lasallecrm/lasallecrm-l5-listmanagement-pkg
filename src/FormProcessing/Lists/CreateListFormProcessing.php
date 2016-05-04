@@ -49,7 +49,7 @@ namespace Lasallecrm\Listmanagement\FormProcessing\Lists;
 
 // LaSalle Software
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
-use Lasallecms\Lasallecmsapi\FormProcessing\BaseFormProcessing;
+use Lasallecms\Lasallecmsadmin\FormProcessing\BaseFormProcessing;
 
 
 /*

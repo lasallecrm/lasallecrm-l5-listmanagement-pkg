@@ -50,7 +50,7 @@ namespace Lasallecrm\Listmanagement\FormProcessing\List_Emails;
 
 // LaSalle Software
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
-use Lasallecms\Lasallecmsapi\FormProcessing\BaseFormProcessing;
+use Lasallecms\Lasallecmsadmin\FormProcessing\BaseFormProcessing;
 
 
 /*
