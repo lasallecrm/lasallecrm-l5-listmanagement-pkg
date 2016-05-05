@@ -16,24 +16,26 @@
 
             <div class="panel-heading">
                 {{{ Config::get('lasallecmsfrontend.site_name') }}}
-                <br />Successfully Subscribed to our Email List
+                <br />Subscribe To Our
+                <br />{!! $title !!}
+                <br />Email LIst
             </div>
 
             <div class="panel-body text-center">
 
                 <br />
 
-                 <button type="button" class="btn btn-lg btn-success" style="color: purple;">
-                     Your email address
-                     <br >
-                     {{{ $email }}}
-                     <br />
-                     is now subscribed to our
-                     <br />
-                     {!! $title !!}
-                     <br />
-                     email list.
-                     <br />
+                 <button type="button" class="btn btn-lg btn-info" style="color: purple;">
+                    Your email address
+                    <br >
+                    {{{ $email }}}
+                    <br />
+                    is already subscribed to the
+                    <br />
+                    {!! $title !!}
+                    <br />
+                    email list.
+                    <br /><br />
                 </button>
 
                 <br /><br />

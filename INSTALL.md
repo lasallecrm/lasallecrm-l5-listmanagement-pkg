@@ -29,7 +29,7 @@ Lasallecrm\Listmanagement\ListmanagementServiceProvider::class,
 
 
 ## Dependencies
-* none
+* SouthLaSalleCRM!
 
 
 ## Publish the Package's Config

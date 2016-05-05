@@ -38,10 +38,10 @@ namespace Lasallecrm\Listmanagement\Repositories;
 use Lasallecrm\Lasallecrmapi\Repositories\BaseRepository;
 use Lasallecrm\Listmanagement\Models\List_Email;
 
-// Laravel facades
-//use Illuminate\Support\Facades\DB;
-
-
+/**
+ * Class List_EmailRepository
+ * @package Lasallecrm\Listmanagement\Repositories
+ */
 class List_EmailRepository extends BaseRepository
 {
     /**
@@ -73,5 +73,57 @@ class List_EmailRepository extends BaseRepository
             ->where('email_id', $emailID)
             ->update(['enabled' => false])
         ;
+    }
+
+    public function getList_emailByEmailID($emailID) {
+        return $this->model
+            ->where('email_id', $emailID)
+            ->first()
+        ;
+    }
+
+    /**
+     * Does the email AND list already exist in the "list_email" db table?
+     *
+     * @param   int  $emailID       The "emails" db table's ID field
+     * @param   int  $listID        The "lists" db table's ID field
+     * @return  bool
+     */
+    public function getList_emailByEmailIdAndListId($emailID, $listID) {
+        return $this->model
+            ->where('email_id', $emailID)
+            ->where('list_id', $listID)
+            ->first()
+        ;
+    }
+
+    /**
+     * INSERT INTO 'list_email'
+     *
+     * @param   array   $data      The data to be saved, which is already validated, washed, & prepped.
+     * @return  mixed              The new list_email.id when save is successful, false when save fails
+     */
+    public function createNewRecord($data) {
+        $list_email = new $this->model;
+
+        $list_email->title      = $data['list_id']." ".$data['email_id'];
+        $list_email->list_id    = $data['list_id'];
+        $list_email->email_id   = $data['email_id'];
+        $list_email->comments   = $data['comments'];
+        $list_email->enabled    = $data['enabled'];
+        $list_email->created_at = $data['created_at'];
+        $list_email->created_by = $data['created_by'];
+        $list_email->updated_at = $data['updated_at'];
+        $list_email->updated_by = $data['updated_by'];
+        $list_email->locked_at  = null;
+        $list_email->locked_by  = null;
+
+        if ($list_email->save()) {
+
+            // Return the new ID
+            return $list_email->id;
+        }
+
+        return false;
     }
 }
