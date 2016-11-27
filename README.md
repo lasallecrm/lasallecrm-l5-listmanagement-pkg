@@ -14,6 +14,8 @@ List Management package for the LaSalle Customer Relationship Management package
 This package focuses on managing email lists, mainly for the purposes of sending out posts via email. Akin to RSS-to-email feeds. The emails are sent via transactional email API's. 
 
 
+[MUST READ CAVEAT ABOUT THIS PACKAGE at https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php](https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php)
+
 ## Security
 
 If you discover any security related issues, please email Bob Bloom at "info at southlasalle dot com" instead of using the issue tracker.
